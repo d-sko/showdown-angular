@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('showdown-angular', ['ngSanitize'])
-  .directive('showdown', function ($sanitize) {
+  .directive('showdown', ['$sanitize', function ($sanitize) {
     return {
       restrict: 'EA',
       require: '^ngModel',
@@ -16,7 +16,7 @@ angular.module('showdown-angular', ['ngSanitize'])
         });
       }
     };
-  })
+  }])
   .directive('showdownExcerpt', function() {
     return {
       restrict: 'EA',
