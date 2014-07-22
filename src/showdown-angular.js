@@ -27,7 +27,7 @@ angular.module('showdown-angular', ['ngSanitize'])
       },
       link: function postLink(scope, element, attrs) {
         var converter = new Showdown.converter(scope.ngOptions || {});
-        var length = !isNaN(attrs.length) || 50;
+        var length = !isNaN(attrs.length) ? attrs.length : 50;
         var end = attrs.end || '...';
         scope.$watch('ngModel', function(newValue) {
           if (newValue) {
