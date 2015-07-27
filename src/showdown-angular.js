@@ -1,7 +1,33 @@
 'use strict';
 
 angular.module('showdown-angular', ['ngSanitize'])
-  .directive('showdown', ['$sanitize', function ($sanitize) {
+  .provider('showdown', function() {
+    var self = this;
+
+    this.setOptions = function(options) {
+      this.defaultOptions = options;
+    };
+
+    this.$get = ['$window', '$log', function($window, $log) {
+      return function(options) {
+        var sd = (function() {
+          if (typeof module !== 'undefined' && typeof exports === 'object') {
+            return require('showdown');
+          } else {
+            return $window.showdown || showdown;
+          }
+        })();
+
+        if (angular.isUndefined(sd)) {
+          $log.error('showdown is not available!');
+          return;
+        }
+        var converterOptions = angular.merge({}, self.defaultOptions, options || {})
+        return new sd.Converter(converterOptions);
+      };
+    }];
+  })
+  .directive('showdown', ['$sanitize', 'showdown', function ($sanitize, showdown) {
     return {
       restrict: 'EA',
       replace: true,
@@ -10,7 +36,7 @@ angular.module('showdown-angular', ['ngSanitize'])
         sdOptions: '='
       },
       link: function postLink(scope, element, attrs) {
-        var converter = new showdown.Converter(scope.sdOptions);
+        var converter = showdown(scope.sdOptions);
         setText(scope.showdown || element.text() || '');
 
         if (attrs.showdown) {
@@ -43,7 +69,7 @@ angular.module('showdown-angular', ['ngSanitize'])
       }
     };
   }])
-  .directive('showdownExcerpt', function() {
+  .directive('showdownExcerpt', ['showdown', function(showdown) {
     return {
       restrict: 'EA',
       scope: {
@@ -51,7 +77,7 @@ angular.module('showdown-angular', ['ngSanitize'])
         sdOptions: '='
       },
       link: function postLink(scope, element, attrs) {
-        var converter = new showdown.Converter(scope.sdOptions || {});
+        var converter = showdown(scope.sdOptions || {});
         var length = !isNaN(attrs.length) ? attrs.length : 50;
         var end = attrs.end || '...';
         scope.$watch('showdown', function(newValue) {
@@ -68,4 +94,4 @@ angular.module('showdown-angular', ['ngSanitize'])
         });
       }
     };
-  });
+  }]);

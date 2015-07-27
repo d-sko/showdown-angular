@@ -10,9 +10,11 @@ Showdown-angular is an [AngularJS](http://angularjs.org/) directive for [Showdow
   - **attribute:** set value to provide the text to parse
   - **element:** set markdown content by including a markdown file with `ng-include`
 - you can also use `showdown-excerpt` with the same attributes (`showdown` and `sd-options`) for an excerpt of the content as plain text. As additional attributes you can set `length` to define after how many characters the text is cut of (default: 50) and `end` to set the text that should be applied to the end (default: '...')
- - a note about performance: `showdown-excerpt` does the same markdown parsing as `showdown` and removes all html tags with regex.
+  - a note about performance: `showdown-excerpt` does the same markdown parsing as `showdown` and removes all html tags with regex.
+- you can use the `showdown` provider to convert markdown
+  - it is possible to set global options by including `showdownProvider` in `app.config()`, there you can call `showdownProvider.setOptions()` to pass a default option object
 
-### Example
+### Examples
 This example assumes there is a `$scope.markdown` variable which contains the markdown-string to parse.
 
 - element:
@@ -23,3 +25,21 @@ This example assumes there is a `$scope.markdown` variable which contains the ma
  ```
  <div showdown="markdown" sd-options="{extensions: ['table']}"></div>
  ```
+- provider:
+```
+angular.module('myapp')
+  .controller('someCtrl', ['$scope', 'showdown', function($scope, showdown) {
+    $scope.markdown = 'some *markdown*';
+    $scope.html = showdown().makeHtml($scope.markdown);
+  }])
+```
+- global options:
+```
+angular.module('myapp', ['...other dependencies...','showdown-angular'])
+  .config(['showdownProvider'], function(showdownProvider) {
+    showdownProvider.setOptions({
+      strikethrough: true,
+      literalMidWordUnderscores: true
+    });
+  });
+```
