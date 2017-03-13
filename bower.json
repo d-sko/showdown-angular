@@ -1,11 +1,11 @@
 {
   "name": "showdown-angular",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/d-sko/showdown-angular",
   "description": "AngularJS directive for showdown",
   "license": "MIT",
   "dependencies": {
-    "showdown": "~1.2",
+    "showdown": "~1.6",
     "angular-sanitize": "^1.2"
   },
   "main": "src/showdown-angular.js",
