@@ -72,14 +72,14 @@ angular.module('showdown-angular', ['ngSanitize'])
     return {
       restrict: 'EA',
       scope: {
-        showdown: '=',
+        showdownExcerpt: '=',
         sdOptions: '='
       },
       link: function postLink(scope, element, attrs) {
         var converter = showdown(scope.sdOptions || {});
         var length = !isNaN(attrs.length) ? attrs.length : 50;
         var end = attrs.end || '...';
-        scope.$watch('showdown', function(newValue) {
+        scope.$watch('showdown-excerpt', function(newValue) {
           if (newValue) {
             var strippedText = converter.makeHtml(newValue).replace(/<\/?[^>]+>/gi, '');
             var result;
