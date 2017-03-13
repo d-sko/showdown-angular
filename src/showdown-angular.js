@@ -1,7 +1,6 @@
-'use strict';
-
 angular.module('showdown-angular', ['ngSanitize'])
   .provider('showdown', function() {
+    'use strict';
     var self = this;
 
     this.setOptions = function(options) {
@@ -22,12 +21,13 @@ angular.module('showdown-angular', ['ngSanitize'])
           $log.error('showdown is not available!');
           return;
         }
-        var converterOptions = angular.merge({}, self.defaultOptions, options || {})
+        var converterOptions = angular.merge({}, self.defaultOptions, options || {});
         return new sd.Converter(converterOptions);
       };
     }];
   })
   .directive('showdown', ['$sanitize', 'showdown', function ($sanitize, showdown) {
+    'use strict';
     return {
       restrict: 'EA',
       replace: true,
@@ -44,7 +44,6 @@ angular.module('showdown-angular', ['ngSanitize'])
         }
 
         function setText(text) {
-          // the following is a dirty hack to keep tasklists through $sanitize
           if (text){
             var convertedText = converter.makeHtml(text);
             // the following is a dirty hack to keep tasklists through $sanitize
@@ -65,7 +64,7 @@ angular.module('showdown-angular', ['ngSanitize'])
           } else {
             element.html('');
           }
-        };
+        }
       }
     };
   }])
