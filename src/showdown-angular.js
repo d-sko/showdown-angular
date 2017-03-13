@@ -79,7 +79,7 @@ angular.module('showdown-angular', ['ngSanitize'])
         var converter = showdown(scope.sdOptions || {});
         var length = !isNaN(attrs.length) ? attrs.length : 50;
         var end = attrs.end || '...';
-        scope.$watch('showdown-excerpt', function(newValue) {
+        scope.$watch('showdownExcerpt', function(newValue) {
           if (newValue) {
             var strippedText = converter.makeHtml(newValue).replace(/<\/?[^>]+>/gi, '');
             var result;
