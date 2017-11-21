@@ -1,6 +1,6 @@
 {
   "name": "showdown-angular",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/d-sko/showdown-angular",
   "description": "AngularJS directive for showdown",
   "license": "MIT",
