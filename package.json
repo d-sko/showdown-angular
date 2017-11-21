@@ -21,5 +21,9 @@
     "url": "https://github.com/d-sko/showdown-angular/issues"
   },
   "homepage": "https://github.com/d-sko/showdown-angular#readme",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "angular-sanitize": "^1.2",
+    "showdown": "~1.6"
+  }
 }
